@@ -9,9 +9,11 @@ venv/
 # Jupyter
 .ipynb_checkpoints/
 
-# Data
+# Data (raw CSVs — too large / confidential)
 data/raw/
 data/processed/
+data/db/
+*.db
 
 # OS
 .DS_Store
