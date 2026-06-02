@@ -1,0 +1,164 @@
+DATA INGESTION SUMMARY
+================================================================================
+
+Dataset: 01_fund_master
+Shape: (40, 15)
+Columns: amfi_code, fund_house, scheme_name, category, sub_category, plan, launch_date, benchmark, expense_ratio_pct, exit_load_pct, min_sip_amount, min_lumpsum_amount, fund_manager, risk_category, sebi_category_code
+Dtypes:
+  amfi_code: int64
+  fund_house: object
+  scheme_name: object
+  category: object
+  sub_category: object
+  plan: object
+  launch_date: object
+  benchmark: object
+  expense_ratio_pct: float64
+  exit_load_pct: float64
+  min_sip_amount: int64
+  min_lumpsum_amount: int64
+  fund_manager: object
+  risk_category: object
+  sebi_category_code: object
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 02_nav_history
+Shape: (46000, 3)
+Columns: amfi_code, date, nav
+Dtypes:
+  amfi_code: int64
+  date: object
+  nav: float64
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 03_aum_by_fund_house
+Shape: (90, 5)
+Columns: date, fund_house, aum_lakh_crore, aum_crore, num_schemes
+Dtypes:
+  date: object
+  fund_house: object
+  aum_lakh_crore: float64
+  aum_crore: int64
+  num_schemes: int64
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 04_monthly_sip_inflows
+Shape: (48, 6)
+Columns: month, sip_inflow_crore, active_sip_accounts_crore, new_sip_accounts_lakh, sip_aum_lakh_crore, yoy_growth_pct
+Dtypes:
+  month: object
+  sip_inflow_crore: int64
+  active_sip_accounts_crore: float64
+  new_sip_accounts_lakh: float64
+  sip_aum_lakh_crore: float64
+  yoy_growth_pct: float64
+Nulls: 12
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 05_category_inflows
+Shape: (144, 3)
+Columns: month, category, net_inflow_crore
+Dtypes:
+  month: object
+  category: object
+  net_inflow_crore: float64
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 06_industry_folio_count
+Shape: (21, 6)
+Columns: month, total_folios_crore, equity_folios_crore, debt_folios_crore, hybrid_folios_crore, others_folios_crore
+Dtypes:
+  month: object
+  total_folios_crore: float64
+  equity_folios_crore: float64
+  debt_folios_crore: float64
+  hybrid_folios_crore: float64
+  others_folios_crore: float64
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 07_scheme_performance
+Shape: (40, 19)
+Columns: amfi_code, scheme_name, fund_house, category, plan, return_1yr_pct, return_3yr_pct, return_5yr_pct, benchmark_3yr_pct, alpha, beta, sharpe_ratio, sortino_ratio, std_dev_ann_pct, max_drawdown_pct, aum_crore, expense_ratio_pct, morningstar_rating, risk_grade
+Dtypes:
+  amfi_code: int64
+  scheme_name: object
+  fund_house: object
+  category: object
+  plan: object
+  return_1yr_pct: float64
+  return_3yr_pct: float64
+  return_5yr_pct: float64
+  benchmark_3yr_pct: float64
+  alpha: float64
+  beta: float64
+  sharpe_ratio: float64
+  sortino_ratio: float64
+  std_dev_ann_pct: float64
+  max_drawdown_pct: float64
+  aum_crore: int64
+  expense_ratio_pct: float64
+  morningstar_rating: int64
+  risk_grade: object
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 08_investor_transactions
+Shape: (32778, 13)
+Columns: investor_id, transaction_date, amfi_code, transaction_type, amount_inr, state, city, city_tier, age_group, gender, annual_income_lakh, payment_mode, kyc_status
+Dtypes:
+  investor_id: object
+  transaction_date: object
+  amfi_code: int64
+  transaction_type: object
+  amount_inr: int64
+  state: object
+  city: object
+  city_tier: object
+  age_group: object
+  gender: object
+  annual_income_lakh: float64
+  payment_mode: object
+  kyc_status: object
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 09_portfolio_holdings
+Shape: (322, 8)
+Columns: amfi_code, stock_symbol, stock_name, sector, weight_pct, market_value_cr, current_price_inr, portfolio_date
+Dtypes:
+  amfi_code: int64
+  stock_symbol: object
+  stock_name: object
+  sector: object
+  weight_pct: float64
+  market_value_cr: float64
+  current_price_inr: float64
+  portfolio_date: object
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
+Dataset: 10_benchmark_indices
+Shape: (8050, 3)
+Columns: date, index_name, close_value
+Dtypes:
+  date: object
+  index_name: object
+  close_value: float64
+Nulls: 0
+Duplicates: 0
+--------------------------------------------------------------------------------
+
