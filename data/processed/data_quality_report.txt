@@ -1,0 +1,77 @@
+
+================================================================================
+DATA QUALITY REPORT - BLUESTOCK MUTUAL FUND ANALYTICS
+================================================================================
+Generated: 2026-06-02 20:11:54
+
+TASK 7: AMFI CODE VALIDATION
+================================================================================
+
+1. DATA SOURCES
+   - Fund Master CSV: data/raw/01_fund_master.csv
+   - NAV History CSV files: 20 files
+   
+2. DATASET OVERVIEW
+
+   Fund Master Data:
+   ├─ Total Schemes: 40
+   ├─ Columns: amfi_code, fund_house, scheme_name, category, sub_category, plan, launch_date, benchmark, expense_ratio_pct, exit_load_pct, min_sip_amount, min_lumpsum_amount, fund_manager, risk_category, sebi_category_code
+   ├─ AMFI Codes: 40 unique
+   └─ Data Quality: 100.0% complete
+
+   NAV History Data:
+   ├─ Total Records: 55,397
+   ├─ Files Combined: 20
+   ├─ Date Range: 2012-12-31 to 2026-06-01
+   ├─ AMFI Codes: 5 unique
+   └─ Data Quality: 64.9% complete
+
+3. VALIDATION RESULTS
+
+   ✓ Fund Master AMFI Codes: 40
+   ✓ NAV History AMFI Codes: 5
+   ✓ Common Codes: 5
+   
+   Validation Status:
+   ├─ Missing in NAV History: 35 codes
+   │  └─ Codes: [np.int64(100016), np.int64(100025), np.int64(100033), np.int64(101206), np.int64(101207), np.int64(101208), np.int64(102885), np.int64(102886), np.int64(102887), np.int64(118633), np.int64(118634), np.int64(118635), np.int64(118636), np.int64(119093), np.int64(119094), np.int64(119095), np.int64(119120), np.int64(119552), np.int64(119598), np.int64(119599), np.int64(120504), np.int64(120505), np.int64(120506), np.int64(120507), np.int64(120842), np.int64(120843), np.int64(120844), np.int64(125497), np.int64(125498), np.int64(148567), np.int64(148568), np.int64(148569), np.int64(149322), np.int64(149323), np.int64(149324)]
+   │
+   └─ Extra in NAV History: 0 codes
+      └─ None (✓ PASS)
+
+4. DATA COMPLETENESS
+
+   Fund Master Fields:
+      ├─ amfi_code: 100.0% complete
+   ├─ fund_house: 100.0% complete
+   ├─ scheme_name: 100.0% complete
+   ├─ category: 100.0% complete
+   ├─ sub_category: 100.0% complete
+   ├─ plan: 100.0% complete
+   ├─ launch_date: 100.0% complete
+   ├─ benchmark: 100.0% complete
+   ├─ expense_ratio_pct: 100.0% complete
+   ├─ exit_load_pct: 100.0% complete
+   ├─ min_sip_amount: 100.0% complete
+   ├─ min_lumpsum_amount: 100.0% complete
+   ├─ fund_manager: 100.0% complete
+   ├─ risk_category: 100.0% complete
+   └─ sebi_category_code: 100.0% complete
+
+   NAV History Fields:
+      ├─ amfi_code: 10.4% complete
+   ├─ date: 100.0% complete
+   ├─ nav: 100.0% complete
+   ├─ fund_name: 0.0% complete
+   ├─ fund_house: 89.6% complete
+   └─ scheme_category: 89.6% complete
+
+5. SUMMARY
+
+   Status: ⚠ VALIDATION ISSUES DETECTED
+   
+   Quality Score: 12.5% (5/40 schemes validated)
+
+================================================================================
+END OF REPORT
+================================================================================
