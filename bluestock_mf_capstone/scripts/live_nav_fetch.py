@@ -175,23 +175,55 @@ def fetch_and_save_nav(amfi_code, fund_name):
 
 def main():
     """
-    Main execution: Fetch live NAV data for mutual funds.
+    Main execution: Fetch live NAV data for 5 major schemes.
     
-    Default: HDFC Top 100 (AMFI: 125497)
+    Schemes:
+    1. SBI Bluechip (119551)
+    2. ICICI Bluechip (120503)
+    3. Nippon Large Cap (118632)
+    4. Axis Bluechip (119092)
+    5. Kotak Bluechip (120841)
     """
     
-    # HDFC Top 100
-    amfi_code = 125497
-    fund_name = "hdfc_top_100"
+    # Define 5 schemes to fetch
+    schemes = [
+        {"amfi_code": 119551, "name": "SBI Bluechip"},
+        {"amfi_code": 120503, "name": "ICICI Bluechip"},
+        {"amfi_code": 118632, "name": "Nippon Large Cap"},
+        {"amfi_code": 119092, "name": "Axis Bluechip"},
+        {"amfi_code": 120841, "name": "Kotak Bluechip"}
+    ]
     
-    # Fetch and save
-    df = fetch_and_save_nav(amfi_code, fund_name)
+    print("\n" + "=" * 80)
+    print("BATCH FETCH: 5 MUTUAL FUND SCHEMES")
+    print("=" * 80)
     
-    if df is not None:
-        print(f"\n📊 Statistics:")
-        print(f"   - Total records: {len(df)}")
-        print(f"   - Latest NAV: ₹{df['nav'].iloc[-1]:.2f}")
-        print(f"   - NAV change: {df['nav'].iloc[-1] - df['nav'].iloc[-2]:.4f}")
+    results = []
+    for i, scheme in enumerate(schemes, 1):
+        print(f"\n[{i}/5] Processing {scheme['name']}...")
+        
+        df = fetch_and_save_nav(scheme['amfi_code'], scheme['name'].lower().replace(" ", "_"))
+        
+        if df is not None:
+            stats = {
+                'scheme': scheme['name'],
+                'amfi_code': scheme['amfi_code'],
+                'records': len(df),
+                'date_from': df['date'].min(),
+                'date_to': df['date'].max(),
+                'latest_nav': df['nav'].iloc[-1]
+            }
+            results.append(stats)
+            print(f"   ✓ Successfully fetched {len(df)} records")
+    
+    # Print summary
+    print("\n" + "=" * 80)
+    print("BATCH SUMMARY")
+    print("=" * 80)
+    summary_df = pd.DataFrame(results)
+    print(summary_df.to_string(index=False))
+    print(f"\n✓ Successfully fetched {len(results)}/5 schemes")
+    print("=" * 80)
 
 
 if __name__ == "__main__":
