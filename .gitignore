@@ -42,6 +42,7 @@ env/
 data/raw/
 data/processed/*.csv
 !data/processed/data_ingestion_summary.txt
+!data/processed/clean_nav.csv
 
 # Database
 *.db
