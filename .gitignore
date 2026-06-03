@@ -43,11 +43,13 @@ data/raw/
 data/processed/*.csv
 !data/processed/data_ingestion_summary.txt
 !data/processed/clean_nav.csv
+!data/processed/clean_transactions.csv
+!data/processed/clean_performance.csv
 
-# Database
-*.db
+# Database — track bluestock_mf.db explicitly
 *.sqlite
 *.sqlite3
+!data/db/bluestock_mf.db
 
 # Environment variables
 .env
