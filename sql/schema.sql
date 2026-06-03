@@ -54,7 +54,7 @@ CREATE TABLE fund_master (
     min_sip_amount       INTEGER CHECK(min_sip_amount > 0),
     min_lumpsum_amount   INTEGER CHECK(min_lumpsum_amount > 0),
     fund_manager         TEXT,
-    risk_category        TEXT    CHECK(risk_category IN ('Low','Moderate','High','Very High')),
+    risk_category        TEXT    CHECK(risk_category IN ('Low','Moderate','Moderately High','High','Very High')),
     sebi_category_code   TEXT
 );
 
