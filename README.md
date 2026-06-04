@@ -42,9 +42,12 @@ bluestock_mf_capstone/
 │   ├── 02_data_cleaning.ipynb     # Phase 2: Cleaning NAV history & forward-fill
 │   ├── 03_clean_transactions.ipynb# Phase 2: Cleaning investor transaction records
 │   ├── 04_clean_performance.ipynb # Phase 2: Cleaning scheme performance & auditing
-│   ├── 03_eda_analysis.ipynb      # Phase 3: Exploratory Data Analysis (Pending)
+│   ├── 03_eda_analysis.ipynb      # Phase 3: Exploratory Data Analysis (Completed)
 │   └── 04_performance_analytics.ipynb # Phase 4: Financial metrics & modeling (Pending)
+├── reports/
+│   └── figures/                   # Exported PNG charts from EDA
 ├── scripts/
+│   ├── build_eda.py               # Script to programmatically build the EDA notebook
 │   ├── load_to_sqlite.py          # ETL Script to recreate and populate the database
 │   ├── live_nav_fetch.py          # Live NAV retrieval API client
 │   └── generate_scheme_navs.py    # Utility to match schemes with NAV datasets
@@ -84,6 +87,12 @@ bluestock_mf_capstone/
     8. Fund Performance vs. Benchmark (Alpha / Beta analysis)
     9. Real NAV-based 1-Year rolling return calculations
     10. KYC-Pending investor SIP risk exposure
+
+### ✅ Day 3: Exploratory Data Analysis (EDA)
+- Programmatically built and executed `03_eda_analysis.ipynb`.
+- Generated 11 publication-quality charts using Matplotlib, Seaborn, and Plotly, exported to `reports/figures/`.
+- Analyzed and documented 10 key insights covering NAV trends, AUM growth, SIP inflow milestones, category preferences, investor demographics, geographic distribution, and sector allocations.
+- Maintained fine-grained version control by committing each of the 10 tasks individually.
 
 ---
 
