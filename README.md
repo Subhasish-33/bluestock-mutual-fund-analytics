@@ -94,6 +94,12 @@ bluestock_mf_capstone/
 - Analyzed and documented 10 key insights covering NAV trends, AUM growth, SIP inflow milestones, category preferences, investor demographics, geographic distribution, and sector allocations.
 - Maintained fine-grained version control by committing each of the 10 tasks individually.
 
+### ✅ Day 4: Fund Performance Analytics
+- Computed key performance and risk metrics (Daily Returns, CAGR, Sharpe Ratio, Sortino Ratio, Alpha, Beta, Max Drawdown) from NAV history.
+- Built a composite Fund Scorecard (0-100) weighting returns, risk, and expense ratios to rank funds.
+- Generated benchmark comparison charts contrasting the Top 5 performing funds against Nifty 50 and Nifty 100 indices over a 3-year period.
+- Completed all tasks iteratively within `Performance_Analytics.ipynb` and produced the final data deliverables (`fund_scorecard.csv`, `alpha_beta.csv`, etc.).
+
 ---
 
 ## ⚙️ Setup and Execution
