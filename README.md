@@ -45,7 +45,9 @@ bluestock_mf_capstone/
 │   ├── 03_eda_analysis.ipynb      # Phase 3: Exploratory Data Analysis (Completed)
 │   └── 04_performance_analytics.ipynb # Phase 4: Financial metrics & modeling (Pending)
 ├── reports/
-│   └── figures/                   # Exported PNG charts from EDA
+│   ├── figures/                   # Exported PNG charts from EDA
+│   ├── dashboards/                # Day 5: Exported Tableau Dashboard PNGs
+│   └── Bluestock_Analytical_dashboard.pdf # Day 5: Consolidated Dashboard PDF
 ├── scripts/
 │   ├── build_eda.py               # Script to programmatically build the EDA notebook
 │   ├── load_to_sqlite.py          # ETL Script to recreate and populate the database
@@ -99,6 +101,16 @@ bluestock_mf_capstone/
 - Built a composite Fund Scorecard (0-100) weighting returns, risk, and expense ratios to rank funds.
 - Generated benchmark comparison charts contrasting the Top 5 performing funds against Nifty 50 and Nifty 100 indices over a 3-year period.
 - Completed all tasks iteratively within `Performance_Analytics.ipynb` and produced the final data deliverables (`fund_scorecard.csv`, `alpha_beta.csv`, etc.).
+
+### ✅ Day 5: Tableau Dashboard Development
+- Developed a 4-page interactive BI dashboard in **Tableau Public** based on investor transactions, NAVs, and performance metrics.
+- Created four targeted dashboard pages:
+  - **Page 1: Industry Overview** (Industry KPIs, Industry AUM Trend, Top 10 Fund Houses by AUM).
+  - **Page 2: Fund Performance** (Risk vs Return Scatter Plot, dynamic Fund Scorecard table, and NAV vs Benchmark Line Chart).
+  - **Page 3: Investor Analytics** (Geographic Transaction Map, Transaction Type Donut Chart, Age group vs SIP size, and Monthly Volume).
+  - **Page 4: SIP & Market Trends** (SIP vs AUM Growth Trend, Category Inflows Heatmap, Top 5 Categories, and YoY Growth KPI).
+- Implemented interactive dashboard actions linking the Fund Scorecard table to the NAV vs Benchmark chart for dynamic drill-down.
+- Exported all deliverables including the packaged workbook (`.twbx`), Landscape PDF, and 4 PNG screenshots of the dashboards into `reports/dashboards/`.
 
 ---
 
