@@ -45,6 +45,19 @@ data/processed/*.csv
 !data/processed/clean_nav.csv
 !data/processed/clean_transactions.csv
 !data/processed/clean_performance.csv
+# Day 5 processed outputs
+!data/processed/alpha_beta.csv
+!data/processed/cagr_report.csv
+!data/processed/fund_scorecard.csv
+!data/processed/max_drawdown.csv
+!data/processed/returns_computed.csv
+!data/processed/sharpe_values.csv
+!data/processed/sortino_values.csv
+# Day 6 processed outputs
+!data/processed/var_cvar_report.csv
+!data/processed/cohort_analysis.csv
+!data/processed/sip_continuity.csv
+!data/processed/sector_hhi.csv
 
 # Database — track bluestock_mf.db explicitly
 *.sqlite
