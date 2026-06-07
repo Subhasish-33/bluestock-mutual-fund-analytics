@@ -12,6 +12,8 @@ This capstone project transforms raw industry data and investor logs into a full
 - Rigorous data cleaning, validation, and imputation.
 - A fully normalized relational database schema with strict foreign key constraints.
 - Optimized analytical queries for mutual fund performance metrics (e.g., Sharpe Ratio, Alpha, Beta) and investor risk profiling.
+- Advanced risk analytics: Historical VaR, CVaR, Rolling Sharpe Ratio, Sector HHI concentration.
+- Investor behaviour analytics: Cohort analysis, SIP continuity flagging, fund recommendation engine.
 
 ---
 
@@ -19,6 +21,9 @@ This capstone project transforms raw industry data and investor logs into a full
 
 - **Data Processing:** Python, Pandas, NumPy, Jupyter Notebooks
 - **Storage & Relational Database:** SQLite, SQLite3, SQL (DDL, DML)
+- **Visualization:** Matplotlib (charts, rolling metrics, HHI bar charts)
+- **BI Dashboard:** Tableau Public (interactive 4-page dashboard)
+- **Risk Metrics:** Historical VaR, CVaR (Expected Shortfall), HHI, Rolling Sharpe
 - **External API:** `mfapi.in` (for live NAV fetching)
 
 ---
@@ -27,35 +32,51 @@ This capstone project transforms raw industry data and investor logs into a full
 
 ```
 bluestock_mf_capstone/
-├── README.md                      # Project documentation and guide
-├── data_dictionary.md             # Schema documentation for all 8 database tables
+├── README.md                          # Project documentation and guide
+├── data_dictionary.md                 # Schema documentation for all 8 database tables
 ├── data/
-│   ├── raw/                       # Raw source CSV files (not tracked in Git)
-│   ├── processed/                 # Cleaned, standardized CSV datasets
-│   │   ├── clean_nav.csv          # Cleaned daily NAV history
-│   │   ├── clean_performance.csv  # Cleaned scheme performance snapshot
-│   │   └── clean_transactions.csv # Cleaned investor transaction log
+│   ├── raw/                           # Raw source CSV files (not tracked in Git)
+│   ├── processed/                     # Cleaned, standardized CSV datasets
+│   │   ├── clean_nav.csv              # Cleaned daily NAV history (64K rows, 40 funds)
+│   │   ├── clean_performance.csv      # Cleaned scheme performance snapshot
+│   │   ├── clean_transactions.csv     # Cleaned investor transaction log (32K rows)
+│   │   ├── fund_scorecard.csv         # Composite fund ranking (Day 4)
+│   │   ├── var_cvar_report.csv        # Historical VaR 95% & CVaR per fund (Day 6)
+│   │   ├── cohort_analysis.csv        # Investor cohort SIP metrics by year (Day 6)
+│   │   ├── sip_continuity.csv         # SIP gap analysis & at-risk flags (Day 6)
+│   │   └── sector_hhi.csv             # Sector HHI concentration per equity fund (Day 6)
 │   └── db/
-│       └── bluestock_mf.db        # The production SQLite database (97,782 records)
+│       └── bluestock_mf.db            # The production SQLite database (97,782 records)
 ├── notebooks/
-│   ├── 01_data_ingestion.ipynb    # Phase 1: Ingestion validation
-│   ├── 02_data_cleaning.ipynb     # Phase 2: Cleaning NAV history & forward-fill
-│   ├── 03_clean_transactions.ipynb# Phase 2: Cleaning investor transaction records
-│   ├── 04_clean_performance.ipynb # Phase 2: Cleaning scheme performance & auditing
-│   ├── 03_eda_analysis.ipynb      # Phase 3: Exploratory Data Analysis (Completed)
-│   └── 04_performance_analytics.ipynb # Phase 4: Financial metrics & modeling (Pending)
+│   ├── 01_data_ingestion.ipynb        # Phase 1: Ingestion validation
+│   ├── 02_data_cleaning.ipynb         # Phase 2: Cleaning NAV history & forward-fill
+│   ├── 03_clean_transactions.ipynb    # Phase 2: Cleaning investor transaction records
+│   ├── 04_clean_performance.ipynb     # Phase 2: Cleaning scheme performance & auditing
+│   ├── 03_eda_analysis.ipynb          # Phase 3: Exploratory Data Analysis
+│   ├── Performance_Analytics.ipynb    # Phase 4: Financial metrics & modeling
+│   ├── Advanced_Analytics.ipynb       # Phase 6: Advanced analytics summary (Day 6) ⭐
+│   └── reports/
+│       ├── rolling_sharpe_chart.png   # Rolling 90-day Sharpe for top 5 funds (Day 6)
+│       └── sector_hhi_chart.png       # Sector HHI concentration bar chart (Day 6)
 ├── reports/
-│   ├── figures/                   # Exported PNG charts from EDA
-│   ├── dashboards/                # Day 5: Exported Tableau Dashboard PNGs
+│   ├── figures/                       # Exported PNG charts from EDA
+│   ├── dashboards/                    # Day 5: Exported Tableau Dashboard PNGs
 │   └── Bluestock_Analytical_dashboard.pdf # Day 5: Consolidated Dashboard PDF
 ├── scripts/
-│   ├── build_eda.py               # Script to programmatically build the EDA notebook
-│   ├── load_to_sqlite.py          # ETL Script to recreate and populate the database
-│   ├── live_nav_fetch.py          # Live NAV retrieval API client
-│   └── generate_scheme_navs.py    # Utility to match schemes with NAV datasets
+│   ├── compute_var_cvar.py            # Task 1: Historical VaR & CVaR computation (Day 6)
+│   ├── compute_rolling_sharpe.py      # Task 2: Rolling 90-day Sharpe chart (Day 6)
+│   ├── compute_cohort_analysis.py     # Task 3: Investor cohort analysis (Day 6)
+│   ├── compute_sip_continuity.py      # Task 4: SIP continuity & at-risk flagging (Day 6)
+│   ├── recommender.py                 # Task 5: Fund recommendation engine (Day 6)
+│   ├── compute_sector_hhi.py          # Task 6: Sector HHI analysis & chart (Day 6)
+│   ├── build_day4.py                  # Script to build Day 4 performance analytics
+│   ├── build_eda.py                   # Script to programmatically build the EDA notebook
+│   ├── load_to_sqlite.py              # ETL Script to recreate and populate the database
+│   ├── live_nav_fetch.py              # Live NAV retrieval API client
+│   └── generate_scheme_navs.py        # Utility to match schemes with NAV datasets
 └── sql/
-    ├── schema.sql                 # Database Schema (8 Tables, 3 Views, 18 Indexes)
-    └── queries.sql                # 10 BI and analytical SQL queries
+    ├── schema.sql                     # Database Schema (8 Tables, 3 Views, 18 Indexes)
+    └── queries.sql                    # 10 BI and analytical SQL queries
 ```
 
 ---
@@ -68,69 +89,86 @@ bluestock_mf_capstone/
 - Integrated with `mfapi.in` API to fetch real-time NAV prices dynamically.
 
 ### ✅ Day 2: Data Cleaning, Schema Design & SQLite Integration
-- **Advanced Data Cleaning:**
-  - Standardized datetime formats across transaction logs, performance files, and NAV tables.
-  - Imputed calendar gaps (weekends/holidays) in NAV series using forward-fill (`ffill`).
-  - Added computed fields like `daily_return` for each scheme.
-  - Resolved inconsistent transactions, filtered out-of-bounds metrics, and added compliance audit flags (e.g. `negative_sharpe_flag`, `expense_ratio_out_of_range_flag`).
-- **Database Architecture & Loading:**
-  - Designed and built a normalized schema with 8 tables, 3 BI-focused views, and 18 indexes for search speed optimization.
-  - Developed `scripts/load_to_sqlite.py` to perform full schema setups and load **97,782 total rows** with active foreign key enforcement (`PRAGMA foreign_keys = ON;`).
-  - Created a comprehensive [Data Dictionary](file:///Users/subhasish/bluestock_mf_capstone/data_dictionary.md) specifying constraints, keys, and column details.
-- **Analytical Insights:**
-  - Designed 10 working analytical queries in `sql/queries.sql` to retrieve:
-    1. Top 5 Funds by Assets Under Management (AUM)
-    2. Average NAV Per Month (Industry-Wide)
-    3. Year-on-Year growth rates for SIP inflows
-    4. Transaction counts and volume by Indian state
-    5. Low-cost mutual fund schemes (Expense Ratio < 1%)
-    6. Top 5 Funds by 3-Year Risk-Adjusted Returns (Sharpe Ratio)
-    7. Monthly SIP vs. Lumpsum vs. Redemption transaction counts & values
-    8. Fund Performance vs. Benchmark (Alpha / Beta analysis)
-    9. Real NAV-based 1-Year rolling return calculations
-    10. KYC-Pending investor SIP risk exposure
+- **Advanced Data Cleaning:** Standardized datetimes, forward-fill NAV gaps, compliance audit flags.
+- **Database Architecture:** 8 tables, 3 BI views, 18 indexes — 97,782 total rows loaded with FK enforcement.
+- **Analytical Queries:** 10 queries in `sql/queries.sql` covering AUM, SIP trends, alpha/beta, KYC risk.
 
 ### ✅ Day 3: Exploratory Data Analysis (EDA)
 - Programmatically built and executed `03_eda_analysis.ipynb`.
-- Generated 11 publication-quality charts using Matplotlib, Seaborn, and Plotly, exported to `reports/figures/`.
-- Analyzed and documented 10 key insights covering NAV trends, AUM growth, SIP inflow milestones, category preferences, investor demographics, geographic distribution, and sector allocations.
-- Maintained fine-grained version control by committing each of the 10 tasks individually.
+- Generated 11 publication-quality charts; 10 key insights across NAV trends, AUM, investor demographics.
 
 ### ✅ Day 4: Fund Performance Analytics
-- Computed key performance and risk metrics (Daily Returns, CAGR, Sharpe Ratio, Sortino Ratio, Alpha, Beta, Max Drawdown) from NAV history.
-- Built a composite Fund Scorecard (0-100) weighting returns, risk, and expense ratios to rank funds.
-- Generated benchmark comparison charts contrasting the Top 5 performing funds against Nifty 50 and Nifty 100 indices over a 3-year period.
-- Completed all tasks iteratively within `Performance_Analytics.ipynb` and produced the final data deliverables (`fund_scorecard.csv`, `alpha_beta.csv`, etc.).
+- Computed CAGR, Sharpe, Sortino, Alpha, Beta, Max Drawdown from NAV history.
+- Built composite Fund Scorecard (0–100) and benchmark comparison charts.
 
 ### ✅ Day 5: Tableau Dashboard Development
-- Developed a 4-page interactive BI dashboard in **Tableau Public** based on investor transactions, NAVs, and performance metrics.
-- Created four targeted dashboard pages:
-  - **Page 1: Industry Overview** (Industry KPIs, Industry AUM Trend, Top 10 Fund Houses by AUM).
-  - **Page 2: Fund Performance** (Risk vs Return Scatter Plot, dynamic Fund Scorecard table, and NAV vs Benchmark Line Chart).
-  - **Page 3: Investor Analytics** (Geographic Transaction Map, Transaction Type Donut Chart, Age group vs SIP size, and Monthly Volume).
-  - **Page 4: SIP & Market Trends** (SIP vs AUM Growth Trend, Category Inflows Heatmap, Top 5 Categories, and YoY Growth KPI).
-- Implemented interactive dashboard actions linking the Fund Scorecard table to the NAV vs Benchmark chart for dynamic drill-down.
-- Exported all deliverables including the packaged workbook (`.twbx`), Landscape PDF, and 4 PNG screenshots of the dashboards into `reports/dashboards/`.
+- 4-page interactive BI dashboard in Tableau Public.
+  - Page 1: Industry Overview | Page 2: Fund Performance
+  - Page 3: Investor Analytics | Page 4: SIP & Market Trends
+- Interactive drill-down linking Fund Scorecard → NAV vs Benchmark chart.
+
+### ✅ Day 6: Advanced Analytics & Risk Metrics
+**Objectives:** Implement risk metrics, investor behaviour analytics, fund recommendation logic, and sector concentration analysis.
+
+#### Task 1 — Historical VaR (95%) & CVaR → `var_cvar_report.csv`
+- Computed daily return distributions from 64K NAV rows across 40 funds.
+- **VaR:** `np.percentile(returns, 5)` | **CVaR:** `returns[returns <= VaR].mean()`
+- Key finding: **ABSL Small Cap** has highest VaR (−2.391% daily); Liquid funds near-zero (−0.02%).
+
+#### Task 2 — Rolling 90-Day Sharpe Ratio → `rolling_sharpe_chart.png`
+- `rolling(90).mean() / rolling(90).std() * sqrt(252)` for top 5 composite-score funds.
+- All funds dipped into negative Sharpe mid-2022 (global rate-hike correction); recovered Q4 2022.
+
+#### Task 3 — Investor Cohort Analysis → `cohort_analysis.csv`
+- Cohort 2024: 4,624 investors, avg SIP ₹10,997, ₹21.5 Cr invested.
+- Cohort 2025: 138 investors, avg SIP ₹13,505 (22.8% higher per SIP vs 2024 cohort).
+
+#### Task 4 — SIP Continuity Analysis → `sip_continuity.csv`
+- 1,362 qualifying investors (6+ SIPs); **1,332 (97.8%) flagged at-risk** (avg gap > 35 days).
+- Mean gap: 64.9 days — prime cohort for SIP re-engagement campaigns.
+
+#### Task 5 — Fund Recommendation Engine → `scripts/recommender.py`
+- `FundRecommender` class: input = risk appetite (Low/Moderate/High), output = Top 3 by Sharpe.
+- Run directly: `python scripts/recommender.py`
+
+#### Task 6 — Sector Concentration (HHI) → `sector_hhi.csv` + `sector_hhi_chart.png`
+- **HHI = Σ(sector_weight_i)²** across 32 equity funds.
+- Most concentrated: Axis Bluechip Fund (HHI=0.297, 48.7% IT). Most diversified: UTI Mid Cap (HHI=0.124).
+
+#### Task 7 — Advanced Analytics Notebook → `notebooks/Advanced_Analytics.ipynb`
+- Master summary: 5 sections, data displays, charts, and 5 Key Insight markdown cells.
+- Fully executable: `jupyter nbconvert --execute notebooks/Advanced_Analytics.ipynb`
 
 ---
 
 ## ⚙️ Setup and Execution
 
 ### 1. Installation
-Clone the repository and install the dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 2. Rerun the ETL Pipeline
-To rebuild the SQLite database schema and reload all cleaned datasets:
 ```bash
 python scripts/load_to_sqlite.py
 ```
 
-### 3. Run Analytical Queries
-You can run the SQL queries using the SQLite command-line interface:
+### 3. Run Day 6 Analytics Scripts
+```bash
+python scripts/compute_var_cvar.py        # Task 1: VaR & CVaR
+python scripts/compute_rolling_sharpe.py  # Task 2: Rolling Sharpe chart
+python scripts/compute_cohort_analysis.py # Task 3: Investor cohorts
+python scripts/compute_sip_continuity.py  # Task 4: SIP continuity
+python scripts/recommender.py             # Task 5: Fund recommendations
+python scripts/compute_sector_hhi.py      # Task 6: Sector HHI
+```
+
+### 4. Run the Advanced Analytics Notebook
+```bash
+jupyter notebook notebooks/Advanced_Analytics.ipynb
+```
+
+### 5. Run Analytical SQL Queries
 ```bash
 sqlite3 data/db/bluestock_mf.db < sql/queries.sql
 ```
-Alternatively, open the database using any SQL client (such as DBeaver or DB Browser for SQLite) to execute queries interactively.
