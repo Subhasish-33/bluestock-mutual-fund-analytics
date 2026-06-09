@@ -20,7 +20,7 @@ print("=" * 80)
 # Filter NAV history for these schemes
 filtered_nav = nav_history[nav_history['amfi_code'].isin(target_amfi_codes)]
 
-print(f"\nFiltered NAV records: {len(filtered_nav)}")
+# print(f"\nFiltered NAV records: {len(filtered_nav)}")
 print(f"Unique schemes in filtered: {filtered_nav['amfi_code'].nunique()}")
 print(f"AMFI codes found: {sorted(filtered_nav['amfi_code'].unique().tolist())}")
 
@@ -49,7 +49,7 @@ for amfi_code in target_amfi_codes:
         scheme_data.to_csv(filename, index=False)
         print(f"✓ [{count+1}/5] {full_name}")
         print(f"   → {filename}")
-        print(f"   → {len(scheme_data)} records | Date range: {scheme_data['date'].min()} to {scheme_data['date'].max()}")
+        # print(f"   → {len(scheme_data)} records | Date range: {scheme_data['date'].min()} to {scheme_data['date'].max()}")
         count += 1
     else:
         print(f"✗ No NAV data found for AMFI code {amfi_code}")

@@ -47,7 +47,7 @@ def load_datasets(raw_data_path="data/raw/"):
             # Print inspection details
             print(f"\n[{idx}/10] {filename}")
             print("-" * 80)
-            print(f"  Shape: {df.shape[0]} rows × {df.shape[1]} columns")
+            # print(f"  Shape: {df.shape[0]} rows × {df.shape[1]} columns")
             print(f"\n  Data Types:")
             for col, dtype in df.dtypes.items():
                 print(f"    - {col}: {dtype}")
@@ -66,7 +66,7 @@ def load_datasets(raw_data_path="data/raw/"):
             print(f"  ❌ Error loading {filename}: {str(e)}")
     
     print("\n" + "=" * 80)
-    print(f"✓ Successfully loaded {len(datasets)} datasets")
+    # print(f"✓ Successfully loaded {len(datasets)} datasets")
     print("=" * 80)
     
     return datasets

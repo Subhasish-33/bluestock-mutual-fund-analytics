@@ -95,7 +95,7 @@ def parse_nav_data(data):
     df['date'] = pd.to_datetime(df['date'], format='%d-%m-%Y')
     df = df.sort_values('date').reset_index(drop=True)
     
-    print(f"   - Total NAV records: {len(df)}")
+    # print(f"   - Total NAV records: {len(df)}")
     print(f"   - Date range: {df['date'].min()} to {df['date'].max()}")
     
     return df
@@ -214,7 +214,7 @@ def main():
                 'latest_nav': df['nav'].iloc[-1]
             }
             results.append(stats)
-            print(f"   ✓ Successfully fetched {len(df)} records")
+            # print(f"   ✓ Successfully fetched {len(df)} records")
     
     # Print summary
     print("\n" + "=" * 80)
@@ -222,7 +222,7 @@ def main():
     print("=" * 80)
     summary_df = pd.DataFrame(results)
     print(summary_df.to_string(index=False))
-    print(f"\n✓ Successfully fetched {len(results)}/5 schemes")
+    # print(f"\n✓ Successfully fetched {len(results)}/5 schemes")
     print("=" * 80)
 
 

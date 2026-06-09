@@ -22,7 +22,7 @@ txns = pd.read_csv(TXN_PATH, parse_dates=["transaction_date"])
 
 # ── Step 1: Filter SIP Transactions Only ──────────────────────────────────────
 sip_txns = txns[txns["transaction_type"] == "SIP"].copy()
-print(f"Total SIP transactions: {len(sip_txns):,}")
+# print(f"Total SIP transactions: {len(sip_txns):,}")
 
 # ── Step 2: Sort by (investor_id, transaction_date) ───────────────────────────
 sip_txns.sort_values(["investor_id", "transaction_date"], inplace=True)

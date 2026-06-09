@@ -67,7 +67,7 @@ def run_portfolio_optimisation():
     mean_ann = mean_daily * 252
     cov_ann  = cov_daily * 252
 
-    print(f"Returns matrix shape: {returns.shape} — {returns.shape[0]} trading days")
+    # print(f"Returns matrix shape: {returns.shape} — {returns.shape[0]} trading days")
 
     # ── Monte Carlo random portfolios ─────────────────────────────────────────
     np.random.seed(42)

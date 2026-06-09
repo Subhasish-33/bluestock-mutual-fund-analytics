@@ -37,8 +37,8 @@ equity_codes = set(equity_perf["amfi_code"].unique())
 
 holdings_equity = holdings[holdings["amfi_code"].isin(equity_codes)].copy()
 
-print(f"Equity funds for HHI analysis: {len(equity_codes)}")
-print(f"Total equity holdings rows: {len(holdings_equity)}")
+# print(f"Equity funds for HHI analysis: {len(equity_codes)}")
+# print(f"Total equity holdings rows: {len(holdings_equity)}")
 
 # ── Step 2: Aggregate Sector Weights Per Fund ──────────────────────────────────
 # Some stocks may appear in same sector for same fund — aggregate them
@@ -89,7 +89,7 @@ assert ((hhi_df["hhi_score"] > 0) & (hhi_df["hhi_score"] <= 1.0)).all(), \
     "HHI must be in (0, 1]!"
 assert hhi_df["top_sector"].notna().all(), "Some funds missing top_sector!"
 assert len(hhi_df) > 0, "No equity funds found!"
-print(f"✅ HHI in (0, 1] for all {len(hhi_df)} equity funds")
+# print(f"✅ HHI in (0, 1] for all {len(hhi_df)} equity funds")
 print(f"✅ top_sector populated for all funds")
 
 # ── Save CSV ───────────────────────────────────────────────────────────────────
